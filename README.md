@@ -108,3 +108,21 @@ CMD [ "python", "./main.py"]
 Queue will be listen by different microservice as per there requirements.
 For reading queue our implementation is in .net core
 [Get started with Azure Service Bus queues (.NET)](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues)
+## Second Propose Solution
+Before the above solution i have propose this solution but later come with above better solution.
+
+This was using AWS kinesis datastream as queue and AWS Lambda for CDC
+![First Solution](https://i.ibb.co/QHvD3SL/Screenshot-2022-04-23-at-4-50-53-PM.png")
+
+### Whats wrong here?
+There was several annoying things that lead me to think for other solution.
+- First we heavily depend on AWS (Lambda, RDS, Kinesis) it would be a bottleneck if we ever
+  think to change our cloud providor.
+- Create a new IAM user for kinesis permissions. Although it not bad but an extra step, Have to provide kinesis full permissions BTW.
+- For pushing messages to kinesis stream we have to use [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) And setting up env variable for AWS sdk.
+- Consuming kinesis stream was a mess, its client library is written in Java, But they provide a [Multilandaemon]() Which we can use to write code in any lang.
+- [Multilangdaemon]() require [DynamoDb]() full access as this is use for store lease and checkpoint etc.
+- These steps have to replicate by each developer who is working on this task this would be a mess
+
+These are some draw backs for Kinesis in my case for which i move to other queue option. Choosing Service bus is a reason because we planning to move to azure in near future. 
+
