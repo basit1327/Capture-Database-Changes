@@ -1,5 +1,6 @@
 
-# Capture Database Change (A Hybrid Cloud Approach)
+# Capture Database Change
+(A Hybrid Cloud Approach)
 #### Developing a reliable/scalable CDC Solution
 
 This architecture is created for purpose of capture database live changes. 
