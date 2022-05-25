@@ -81,25 +81,33 @@ There was some other options but i was thinking for solution meet our core requi
 - Use python 'azure.servicebus' package for queue operations
 - Pack working code into container to be hoster on any docker enabled environment
 ```bash
-#Deriving the latest base image
-FROM python:3.9
+FROM python:3.8
 
-#Labels as key value pair
-LABEL Maintainer="CDC"
-
-# Any working directory can be chosen as per choice like '/' or '/home' etc
-# i have chosen /
 WORKDIR /
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-#to COPY the remote file at working directory in container
 COPY main.py ./
-# Now the structure looks like this '/main.py'
 
-#CMD instruction should be used to run the software
-#contained by your image, along with any arguments.
+ARG DB_CONNECTION_STRING
+ENV DB_CONNECTION_STRING=$DB_CONNECTION_STRING
+
+RUN echo "DB_CONNECTION_STRING= $DB_CONNECTION_STRING"
+
+ARG SERVICE_BUS_CONNECTION_STRING
+ENV SERVICE_BUS_CONNECTION_STRING=${SERVICE_BUS_CONNECTION_STRING}
+RUN echo "SERVICE_BUS_CONNECTION_STRING= $SERVICE_BUS_CONNECTION_STRING"
+
+ARG SERVICE_BUS_QUEUE
+ENV SERVICE_BUS_QUEUE=${SERVICE_BUS_QUEUE}
+RUN echo "SERVICE_BUS_QUEUE= $SERVICE_BUS_QUEUE"
+
+ARG REPLICATION_SLOT_NAME
+ENV REPLICATION_SLOT_NAME=${REPLICATION_SLOT_NAME}
+RUN echo "REPLICATION_SLOT_NAME= $REPLICATION_SLOT_NAME"
+
+
 
 CMD [ "python", "./main.py"]
 ```
