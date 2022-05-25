@@ -112,6 +112,21 @@ RUN echo "REPLICATION_SLOT_NAME= $REPLICATION_SLOT_NAME"
 CMD [ "python", "./main.py"]
 ```
 
+### docker-compose
+```
+version: '3'
+services:
+  pg-cdc-container:
+    build: 
+      context: .
+      args:
+        - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+        - SERVICE_BUS_CONNECTION_STRING=${SERVICE_BUS_CONNECTION_STRING}
+        - SERVICE_BUS_QUEUE=${SERVICE_BUS_QUEUE}
+        - REPLICATION_SLOT_NAME=${REPLICATION_SLOT_NAME}
+    image: walyloaderdev.azurecr.io/cdc-container:0.4
+```
+
 ### Listening Queue 
 
 Queue will be listen by different microservice as per there requirements.
