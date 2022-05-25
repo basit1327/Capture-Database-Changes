@@ -124,7 +124,7 @@ services:
         - SERVICE_BUS_CONNECTION_STRING=${SERVICE_BUS_CONNECTION_STRING}
         - SERVICE_BUS_QUEUE=${SERVICE_BUS_QUEUE}
         - REPLICATION_SLOT_NAME=${REPLICATION_SLOT_NAME}
-    image: walyloaderdev.azurecr.io/cdc-container:0.4
+    image: <container_name>.azurecr.io/cdc-container:0.4
 ```
 
 ### Listening Queue 
